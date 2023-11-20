@@ -160,9 +160,12 @@ rollBtn.addEventListener("click", function() {
   if (player1Score >= 20) {
     message.textContent = "Player 1 has won! 🥳";
     showDisplayButton();
+    reset();
+
   } else if (player2Score >= 20) {
     message.textContent = "Player 2 has won! 🎉";
     showDisplayButton();
+    reset();
 }
 
   player1Turn = !player1Turn
