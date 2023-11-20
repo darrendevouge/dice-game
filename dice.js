@@ -11,6 +11,8 @@ const message = document.getElementById("message")
 const rollBtn = document.getElementById("rollBtn")
 const resetBtn = document.getElementById("resetBtn")
 
+rollBtn.addEventListener("click", playgame);
+
 const drawDieFace = (rollnum) => {
   const diceElement = document.createElement('div');
   
@@ -123,7 +125,78 @@ function reset(){
   player2ScoreBoard.textContent = '0'
 }
 
+function playgame() {
+  const randomNumber = Math.floor(Math.random() * 6) + 1
+  const dieFace = drawDieFace(randomNumber);
+
+  if (player1Turn) {
+
+    if (player1Dice.hasChildNodes()) {
+      player1Dice.removeChild(player1Dice.children[0]);
+    }
+    player1Dice.appendChild(dieFace);
+    player1Score += randomNumber;
+
+    if (player1Score >= 20) {
+      message.textContent = "Player 1 has won! 🥳";
+      //showDisplayButton();
+      //reset();
+  
+    }
+    else {
+      player2ScoreBoard.classList.remove("newestScore");
+      player1ScoreBoard.classList.add("newestScore");
+      player1ScoreBoard.textContent = player1Score;
+      player1Dice.classList.remove("active");
+      player2Dice.classList.add("active");
+      message.textContent = "Player 2 Turn";
+    }
+  }
+  else {
+    if (player2Dice.hasChildNodes()) {
+      player2Dice.removeChild(player2Dice.children[0]);
+    }
+
+    player2Dice.appendChild(dieFace);
+    player2Score += randomNumber;
+    player1ScoreBoard.classList.remove("newestScore");
+    player2ScoreBoard.classList.add("newestScore")
+    player2ScoreBoard.textContent = player2Score;
+
+   
+    if (player2Score >= 20) {
+      message.textContent = "Player 2 has won! 🎉";
+      //showDisplayButton();
+      //reset();
+    }
+    else {
+      player2Dice.classList.remove("active");
+      player1Dice.classList.add("active");
+      message.textContent = "Player 1 Turn";
+    }
+    
+  }
+
+  /*
+  if (player1Score >= 20) {
+    message.textContent = "Player 1 has won! 🥳";
+    showDisplayButton();
+    reset();
+
+  } else if (player2Score >= 20) {
+    message.textContent = "Player 2 has won! 🎉";
+    showDisplayButton();
+    reset();
+  }
+
+  */
+
+  player1Turn = !player1Turn
+
+}
+
 /* Hook up a click event listener to the Roll Dice Button. */
+/*
 rollBtn.addEventListener("click", function() {
   const randomNumber = Math.floor(Math.random() * 6) + 1
   const dieFace = drawDieFace(randomNumber);
@@ -171,6 +244,8 @@ rollBtn.addEventListener("click", function() {
   player1Turn = !player1Turn
 
 });
+
+*/
 
 resetBtn.addEventListener("click", reset);
 
